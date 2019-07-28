@@ -1,6 +1,7 @@
-package _03_longest_substring_without_repeating_characters
+package test
 
 import (
+	retry "../algorithms/003-longest-substring-without-repeating-characters"
 	"fmt"
 	"testing"
 )
@@ -55,7 +56,7 @@ func Test_Problem3(t *testing.T) {
 
 	for _, q := range qs {
 		_, p := q.ans3, q.para3
-		fmt.Printf("【input】:%v       【output】:%v\n", p, lengthOfLongestSubstring1(p.s))
+		fmt.Printf("【input】:%v       【output】:%v\n", p, retry.LengthOfLongestSubstring1(p.s))
 	}
 	fmt.Printf("\n\n\n")
 }

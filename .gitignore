@@ -16,3 +16,4 @@
 
 #/algorithms/*/*_test.go
 /go.mod
+/src/test/
