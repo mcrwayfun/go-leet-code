@@ -1,6 +1,6 @@
 package _01_two_sum
 
-func twoSum(nums []int, target int) []int {
+func TwoSum(nums []int, target int) []int {
 	// nums is nil or empty
 	if nums == nil || len(nums) == 0 {
 		return nil

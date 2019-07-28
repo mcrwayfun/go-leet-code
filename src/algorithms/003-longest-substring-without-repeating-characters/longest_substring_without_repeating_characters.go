@@ -25,7 +25,7 @@ func lengthOfLongestSubstring(s string) int {
 
 // time complexity:O(n)
 // space complexity:O(1)
-func lengthOfLongestSubstring1(s string) int {
+func LengthOfLongestSubstring1(s string) int {
 	// s is empty
 	if len(s) == 0 {
 		return 0
