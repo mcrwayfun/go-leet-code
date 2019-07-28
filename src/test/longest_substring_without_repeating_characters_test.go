@@ -1,7 +1,7 @@
 package test
 
 import (
-	retry "../algorithms/003-longest-substring-without-repeating-characters"
+	retry "algorithms/003-longest-substring-without-repeating-characters"
 	"fmt"
 	"testing"
 )

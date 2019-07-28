@@ -1,7 +1,7 @@
 package test
 
 import (
-	retry "../algorithms/001-two-sum"
+	retry "algorithms/001-two-sum"
 	"fmt"
 	"testing"
 )
