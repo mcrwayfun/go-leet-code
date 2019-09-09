@@ -32,7 +32,7 @@ func search(nums []int, target int) int {
 			return mid
 		} else if nums[mid] < nums[right] { // 右边有序
 			// target在右边
-			if nums[mid] < target && nums[right] >= target {
+			if nums[mid] <= target && nums[right] >= target {
 				left = mid + 1
 			} else {
 				right = mid
@@ -40,7 +40,7 @@ func search(nums []int, target int) int {
 		} else {
 			// 左边有序
 			// target在左边
-			if nums[mid] > target && nums[left] <= target {
+			if nums[mid] >=target && nums[left] <= target {
 				right = mid
 			} else {
 				left = mid + 1
