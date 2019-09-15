@@ -38,6 +38,8 @@ A.length >= 3
 给定一个确定为山脉的数组，返回任何满足 A[0] < A[1] < ... A[i-1] < A[i] > A[i+1] > ... > A[A.length - 1] 的 i 的值。
 
 链接：https://leetcode-cn.com/problems/peak-index-in-a-mountain-array
+time complexity:O(lgn)
+space complexity:O(1)
 */
 func peakIndexInMountainArray3(A []int) int {
 	if len(A) < 3 {
