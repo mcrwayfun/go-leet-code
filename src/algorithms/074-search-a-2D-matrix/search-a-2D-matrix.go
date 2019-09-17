@@ -55,3 +55,30 @@ func searchMatrix(matrix [][]int, target int) bool {
 
 	return false
 }
+
+// 将这个当作一个一维数组而不是二维的
+func searchMatrix2(matrix [][]int, target int) bool {
+
+	if matrix == nil || len(matrix) == 0 ||
+		len(matrix[0]) == 0 {
+		return false
+	}
+
+	n,m := len(matrix), len(matrix[0])
+	start, end := 0, m*n-1
+	for start+1 < end {
+		mid := start + (end-start)/2
+		if matrix[mid/m][mid%m] == target {
+			return true
+		} else if matrix[mid/m][mid%m] < target {
+			start = mid
+		} else {
+			end = mid
+		}
+	}
+
+	if matrix[start/m][start%m] == target || matrix[end/m][end%m] == target {
+		return true
+	}
+	return false
+}
