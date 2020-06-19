@@ -1,6 +1,8 @@
 package main
 
-import "fmt"
+import (
+	"fmt"
+)
 
 func swapPairs(head *ListNode) *ListNode {
 	if head == nil {
@@ -21,7 +23,7 @@ func swapPairs(head *ListNode) *ListNode {
 
 		pre = node1
 	}
-
+	
 	return dummyHead.Next
 }
 
