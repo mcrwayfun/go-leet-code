@@ -63,7 +63,7 @@ func main() {
 	head2 := &ListNode{4, head3}
 	head1 := &ListNode{1, head2}
 
-	newHead := partition2(head1,3)
+	newHead := partition(head1,3)
 	println(newHead.String())
 }
 

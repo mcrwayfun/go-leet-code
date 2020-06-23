@@ -26,7 +26,7 @@ func deleteDuplicates(head *ListNode) *ListNode {
 func main(){
 	head5 := &ListNode{3, nil}
 	head4 := &ListNode{3, head5}
-	head3 := &ListNode{2, head4}
+	head3 := &ListNode{1, head4}
 	head2 := &ListNode{1, head3}
 	head1 := &ListNode{1, head2}
 

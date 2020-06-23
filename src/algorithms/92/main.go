@@ -42,22 +42,39 @@ func reverseBetween(head *ListNode, m int, n int) *ListNode {
 }
 
 func reverseBetween2(head *ListNode, m int, n int) *ListNode {
-	dummy := &ListNode{Next: head}
-
-	g := dummy
-	p := dummy.Next
-	for i := 0; i < m-1; i++ {
-		g = g.Next
-		p = p.Next
+	if head == nil {
+		return nil
 	}
 
-	for i := 0; i < n-m; i++ {
-		removed := p.Next
-		p.Next = p.Next.Next
-		removed.Next = g.Next
-		g.Next = removed
+	start, changeLen := m, n-m+1
+	dummyHead := &ListNode{Next: head}
+	cur := dummyHead
+	var prev *ListNode = nil
+
+	// 找到逆置的前置节点
+	for i := 0; i < start; i++ {
+		prev = cur
+		cur = cur.Next
 	}
-	return dummy.Next
+
+	newTail := cur              // 逆转后的尾节点
+	var newHead *ListNode = nil // 逆转后的头节点
+	for i := 0; i < changeLen; i++ {
+		t := cur.Next
+		cur.Next = newHead
+		newHead = cur
+		cur = t
+	}
+
+	result := dummyHead
+	if prev == nil {
+		result = newHead
+	} else {
+		perv.Next = newHead
+	}
+
+	newTail.Next = cur // 续接后续尾节点
+	return dummyHead.Next
 }
 
 func reverseBetween3(head *ListNode, m int, n int) *ListNode {
