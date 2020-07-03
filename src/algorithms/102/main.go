@@ -22,12 +22,12 @@ func int2TreeNode(ints []int) *TreeNode {
 	for i < n {
 		node := queue[0]
 		queue = queue[1:]
-		if i < n && ints[i] != 0 {
+		if i < n && ints[i] != -1 {
 			node.Left = &TreeNode{Val: ints[i]}
 			queue = append(queue, node.Left)
 		}
 		i++
-		if i < n && ints[i] != 0 {
+		if i < n && ints[i] != -1 {
 			node.Right = &TreeNode{Val: ints[i]}
 			queue = append(queue, node.Right)
 		}
@@ -65,7 +65,7 @@ func bfs(root *TreeNode, s *[][]int, level int) {
 }
 
 func main() {
-	node := []int{3, 9, 20, 0, 0, 15, 7}
+	node := []int{3, 9, 20, -1, -1, 15, 7}
 	root := int2TreeNode(node)
 	order := levelOrder(root)
 	fmt.Println(order)
