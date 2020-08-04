@@ -4,11 +4,11 @@ import (
 	"fmt"
 )
 
-/// Time Complexity: O(lgn)
+/// Time Complexity: O(n)
 /// Space Complexity: O(1)
 func findMin(nums []int) int {
-	min := 1 << 31
-	for _, v := range nums {
+	min := nums[0]
+	for _, v := range nums[1:] {
 		if v < min {
 			min = v
 		}
