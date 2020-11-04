@@ -50,3 +50,32 @@ func search(nums []int, target int) int {
 
 	return -1
 }
+
+func search2(nums []int, target int) int {
+	if len(nums) == 0 {
+		return -1
+	}
+
+	length := len(nums)-1
+	start, end := 0, length
+	for start <= end {// [start, end]
+		mid := start + (end - start)/2
+		if nums[mid] == target {
+			return mid
+		} else  if nums[0] <= nums[mid] {// 在[0,mid)
+			if nums[0] <= target && nums[mid] > target {
+				end = mid - 1
+			} else {
+				start = mid + 1
+			}
+		} else {// 在[mid,length]
+			if nums[mid] <= target && nums[length] >= target {
+				start = mid + 1
+			} else {
+				end = mid - 1
+			}
+		}
+	}
+
+	return -1
+}
