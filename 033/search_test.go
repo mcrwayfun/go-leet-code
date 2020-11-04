@@ -1,4 +1,4 @@
-package _33
+package main
 
 import "testing"
 
@@ -47,8 +47,8 @@ func Test_search(t *testing.T) {
 		{
 			name: "test_case_4",
 			args: args{
-				nums:   []int{1,3},
-				target: 3,
+				nums:   []int{3,1},
+				target: 1,
 			},
 			want: 1,
 		},
