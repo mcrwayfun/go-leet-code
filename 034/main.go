@@ -79,6 +79,40 @@ func searchLastEqualElement(nums []int, target int) int {
 	return -1
 }
 
+func searchRange3(nums []int, target int) []int {
+	start, end := 0, len(nums)-1
+	for start <= end {
+		mid := start + (end - start)/2
+		if nums[mid] >= target {
+			end = mid - 1
+		} else if nums[mid] < target {
+			start = mid + 1
+		}
+	}
+
+	if start > len(nums)-1 || nums[start] != target {
+		return []int{-1, -1}
+	}
+	first := start // 开始位置
+
+	start, end = 0, len(nums)-1
+	for start <= end {
+		mid := start + (end - start)/2
+		if nums[mid] <= target {
+			start = mid + 1
+		} else if nums[mid] > target {
+			end = mid - 1
+		}
+	}
+
+	if end < 0 || nums[end] != target {
+		return []int{-1, -1}
+	}
+
+	last := end
+	return []int{first, last}
+}
+
 func main() {
 	ints := []int{5, 7, 7, 8, 8, 10}
 	ret := searchRange2(ints, 8)
