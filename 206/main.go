@@ -40,6 +40,19 @@ func reverseList(head *ListNode) *ListNode {
 	return newHead
 }
 
+// 反转链表
+func reverseList2(head *ListNode) *ListNode {
+	if head == nil || head.Next == nil {
+		return head
+	}
+
+	// 反转后的头指针
+	ret := reverseList(head.Next)
+	head.Next.Next = head
+	head.Next = nil
+	return ret
+}
+
 func main() {
 	tail := &ListNode{-1, nil}
 	head5 := &ListNode{5, tail}
