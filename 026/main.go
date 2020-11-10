@@ -7,15 +7,15 @@ func removeDuplicates(nums []int) int {
 		return 0
 	}
 
-	for i := 0; i < len(nums); i++ {
-		before := nums[i]
-		for i+1 < len(nums) && before == nums[i] {
+	i := 0
+	for i = 0; i < len(nums)-1; i++ {
+		if nums[i] == nums[i+1] {
 			nums = append(nums[:i], nums[i+1:]...)
+			i--
 		}
 	}
-
-	fmt.Printf("长度为:%d, 移除后的数组为:%v\n", len(nums), nums)
-	return len(nums)
+	// fmt.Printf("数组长度为:%d, 数组为:%v\n", i+1, nums[:i+1])
+	return i + 1
 }
 
 func removeDuplicates2(nums []int) int {
@@ -61,12 +61,17 @@ func removeDuplicates3(nums []int) int {
 
 func main() {
 	nums := []int{0, 0, 1, 1, 1, 2, 2, 3, 3, 4}
-	length := removeDuplicates3(nums)
-	_ = length
+	_ = removeDuplicates(nums)
 
-	nums = []int{1, 1}
-	length = removeDuplicates3(nums)
+	nums = []int{1, 1, 2}
+	_ = removeDuplicates(nums)
 
 	nums = []int{1, 1, 1}
-	length = removeDuplicates3(nums)
+	_ = removeDuplicates(nums)
+
+	nums = []int{1}
+	_ = removeDuplicates(nums)
+
+	nums = []int{1, 1}
+	_ = removeDuplicates(nums)
 }
