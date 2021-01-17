@@ -44,7 +44,7 @@ func getLen(head *ListNode) int {
 
 func main() {
 	head := NewListNodes([]int{1, 2, 3, 4, 5})
-	right := rotateRight(head, 2)
+	right := rotateRight(head, 4)
 	fmt.Printf("%s", right)
 }
 
