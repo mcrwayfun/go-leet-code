@@ -2,28 +2,33 @@ package main
 
 import "fmt"
 
+/**
+ * Definition for singly-linked list.
+ * type ListNode struct {
+ *     Val int
+ *     Next *ListNode
+ * }
+ */
 func addTwoNumbers(l1 *ListNode, l2 *ListNode) *ListNode {
-	if l1 == nil || l2 == nil {
-		return nil
+	if l1 == nil {
+		return l2
 	}
 
-	dumpHead := &ListNode{} // 构建虚拟头节点
-	cur := dumpHead
-	carry := 0 // 进位
+	if l2 == nil {
+		return l1
+	}
 
+	carry := 0
+	cur := &ListNode{}
+	ret := cur
 	for l1 != nil || l2 != nil {
-		var a, b int
-		if l1 != nil {
-			a = l1.Val
-		}
-		if l2 != nil {
-			b = l2.Val
-		}
+		x := getVal(l1)
+		y := getVal(l2)
 
-		cur.Next = &ListNode{Val: (a + b + carry) % 10}
+		cur.Next = &ListNode{Val: (x+y+carry)%10}
 		cur = cur.Next
+		carry = (x+y+carry)/10 // 获取进位
 
-		carry = (a + b + carry) / 10 // 获取进位，题目说进位可能大于1
 		if l1 != nil {
 			l1 = l1.Next
 		}
@@ -32,11 +37,19 @@ func addTwoNumbers(l1 *ListNode, l2 *ListNode) *ListNode {
 		}
 	}
 
-	if carry > 0 {// 最后一位为进位
-		cur.Next = &ListNode{Val: carry % 10}
+	if carry > 0 {// 最后一位仍有进位
+		cur.Next = &ListNode{Val: carry}
 	}
 
-	return dumpHead.Next
+	return ret.Next
+}
+
+func getVal(head *ListNode) int {
+	if head != nil {
+		return head.Val
+	} else {
+		return 0
+	}
 }
 
 func main(){
