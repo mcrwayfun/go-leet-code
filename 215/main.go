@@ -4,7 +4,7 @@ import "fmt"
 
 func findKthLargest(nums []int, k int) int {
 	nums = quickSort(nums)
-	return nums[k-1]
+	return nums[len(nums)-k]
 }
 
 func mergeSort(arr []int) []int {
