@@ -14,12 +14,11 @@ func backtrack(start, sum, target int, candidates, res []int, ans *[][]int) {
 	}
 
 	for i:=start; i<len(candidates); i++{
-		if sum > target {// 剪枝
+		if sum > target {
 			continue
 		}
 		res = append(res, candidates[i])
 		backtrack(i, sum+candidates[i], target, candidates, res, ans)
 		res = res[:len(res)-1]
 	}
-	return
 }
