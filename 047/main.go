@@ -19,7 +19,6 @@ func backtrack(nums, res []int, used []bool, ans *[][]int) {
 		*ans = append(*ans, append([]int{}, res...))
 		return
 	}
-
 	for i := 0; i < len(nums); i++ {
 		if !used[i] { // 当前元素没有使用过
 			//1 nums[i-1] 没用过 说明回溯到了同一层 此时接着用num[i] 则会与 同层用num[i-1] 重复
