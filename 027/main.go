@@ -3,21 +3,25 @@ package main
 import "fmt"
 
 func removeElement(nums []int, val int) int {
-	first, last := 0, len(nums)
-	for first < last {
-		if nums[first] == val {
-			nums[first] = nums[last-1]
-			last--
-		} else {
-			first++
+	if len(nums) == 0 {
+		return 0
+	}
+	j := 0
+	for i := 0; i < len(nums); i++ {
+		if nums[i] != val {
+			if i != j {
+				nums[i], nums[j] = nums[j], nums[i]
+				j++
+			} else {
+				j++
+			}
 		}
 	}
-	fmt.Printf("数组长度为:%d, 数据为:%v\n", len(nums), nums)
-	return last
+	return j
 }
 
 func main() {
-	nums := []int{3, 2, 2, 3}
+	nums := []int{2, 3, 3, 3}
 	target := 3
 	element := removeElement(nums, target)
 	fmt.Println(element)
