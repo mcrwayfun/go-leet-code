@@ -82,7 +82,7 @@ func searchLastEqualElement(nums []int, target int) int {
 func searchRange3(nums []int, target int) []int {
 	start, end := 0, len(nums)-1
 	for start <= end {
-		mid := start + (end - start)/2
+		mid := start + (end-start)/2
 		if nums[mid] >= target {
 			end = mid - 1
 		} else if nums[mid] < target {
@@ -97,7 +97,7 @@ func searchRange3(nums []int, target int) []int {
 
 	start, end = 0, len(nums)-1
 	for start <= end {
-		mid := start + (end - start)/2
+		mid := start + (end-start)/2
 		if nums[mid] <= target {
 			start = mid + 1
 		} else if nums[mid] > target {
@@ -113,8 +113,49 @@ func searchRange3(nums []int, target int) []int {
 	return []int{first, last}
 }
 
+/**
+[5,7,7,8,8,10]
+8
+[5,7,7,8,8,10]
+6
+[]
+0
+*/
 func main() {
-	ints := []int{5, 7, 7, 8, 8, 10}
-	ret := searchRange2(ints, 8)
-	fmt.Println(ret)
+	nums := []int{5, 7, 7, 8, 8, 10}
+	ans := f1(nums, 8)
+	fmt.Println(ans)
+}
+
+func f1(nums []int, target int) []int {
+	left, right := 0, len(nums)
+	for left < right { // 左闭右开
+		mid := left + (right-left)/2
+		if nums[mid] >= target {
+			right = mid
+		} else {
+			left = mid + 1
+		}
+	}
+
+	if left > len(nums)-1 || nums[left] != target {
+		return []int{-1, -1}
+	}
+	start := left
+
+	left, right = 0, len(nums)
+	for left < right {
+		mid := left + (right-left)/2
+		if nums[mid] <= target {
+			left = mid + 1
+		} else {
+			right = mid
+		}
+	}
+
+	if right < 0 || nums[right] != target {
+		return []int{-1, -1}
+	}
+	end := right
+	return []int{start, end}
 }
