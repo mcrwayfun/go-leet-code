@@ -27,7 +27,7 @@ func inorderTraversal(root *TreeNode) []int {
 
 // 非递归中序遍历
 // time complexity: O(n)
-// space complexity: O(1)
+// space complexity: O(n)
 func inorderTraversalNonRecursion(root *TreeNode) []int {
 	var result []int
 	if root == nil {
