@@ -1,69 +1,61 @@
 package main
 
-import "math"
+import (
+	. "../tool/tree"
+	"fmt"
+)
 
-type TreeNode struct {
-	Val   int
-	Left  *TreeNode
-	Right *TreeNode
+type ResultType struct {
+	IsBalanced bool
+	MaxDepth   int
 }
 
-/// Time Complexity: O(nlgN)
-/// Space Complexity: O(h)
+// time complexity: O(n)
+// space complexity: O(1)
 func isBalanced(root *TreeNode) bool {
-	if root == nil{
-		return true
-	}
-
-	if math.Abs(getHeight(root.Left) - getHeight(root.Right)) > 1{
-		return false
-	}
-
-	if !isBalanced(root.Left) || !isBalanced(root.Right){
-		return false
-	}
-	return true
+	return helper(root).IsBalanced
 }
 
-func getHeight(root *TreeNode) float64 {
-	if root == nil{
-		return 0
+func helper(root *TreeNode) ResultType {
+	if root == nil {
+		return ResultType{true, 0}
 	}
 
-	leftMaxDepth := getHeight(root.Left)
-	rightMaxDepth := getHeight(root.Right)
+	leftResultType := helper(root.Left)
+	rightResultType := helper(root.Right)
 
-	if leftMaxDepth > rightMaxDepth{
-		return leftMaxDepth + 1
+	if !leftResultType.IsBalanced || !rightResultType.IsBalanced {
+		return ResultType{false, -1}
 	}
 
-	return rightMaxDepth + 1
+	if abs(leftResultType.MaxDepth, rightResultType.MaxDepth) > 1 {
+		return ResultType{false, -1}
+	}
+
+	return ResultType{true,
+		max(leftResultType.MaxDepth, rightResultType.MaxDepth) + 1}
 }
 
-/// Time Complexity: O(lgN)
-/// Space Complexity: O(h)
-func isBalanced2(root *TreeNode) bool {
-	return isBalancedHelper(root) != -1
+func max(a, b int) int {
+	if a > b {
+		return a
+	}
+	return b
 }
 
-func isBalancedHelper(root *TreeNode) float64 {
-	if root == nil{
-		return 0
+func abs(a, b int) int {
+	if a > b {
+		return a - b
 	}
+	return b - a
+}
 
-	leftHeight := isBalancedHelper(root.Left)
-	if leftHeight == -1 {
-		return -1
-	}
+func main() {
+	nums := []int{3, 9, 20, NULL, NULL, 15, 7}
+	root := Ints2TreeNode(nums)
+	fmt.Println(isBalanced(root))
 
-	rightHeight := isBalancedHelper(root.Right)
-	if rightHeight == -1 {
-		return -1
-	}
-
-	if math.Abs(leftHeight - rightHeight) > 1 {
-		return -1
-	}
-
-	return math.Max(leftHeight, rightHeight) + 1
+	nums = []int{1, 2, 2, 3, 3, NULL, NULL, 4, 4}
+	root = Ints2TreeNode(nums)
+	fmt.Println(isBalanced(root))
 }
