@@ -7,14 +7,14 @@ import (
 )
 
 type ResultType struct {
-	Root2AnyPath int
-	Any2AnyPath  int
+	Root2Any int
+	Any2Any int
 }
 
 // time complexity: O(n^2)
 // space complexity: O(1)
 func maxPathSum(root *TreeNode) int {
-	return helper(root).Any2AnyPath
+	return helper(root).Any2Any
 }
 
 func helper(root *TreeNode) ResultType {
@@ -25,18 +25,40 @@ func helper(root *TreeNode) ResultType {
 	left := helper(root.Left)
 	right := helper(root.Right)
 
-	// 根节点到任意节点的最大路径和
-	root2AnyPath := max(0, max(left.Root2AnyPath, right.Root2AnyPath)) + root.Val
+	root2Any := max(0, max(left.Root2Any, right.Root2Any)) + root.Val // 从根节点->任意节点的最大路径和（仅有一边）
 
-	// 任意节点到任意节点的最大路径和: 分为三个部分：根节点、左子树、右子树. 这里使用了两次分治法
+	// 从任意节点->任意节点的最大路径和
+	any2Any := max(left.Any2Any, right.Any2Any) // 左右子树的
+	// 从根节点->任意节点的最大路径和（包含根节点在内，两边都要算上）
+	any2Any = max(0, max(0, left.Root2Any) + max(0, right.Root2Any) + root.Val)
+	return ResultType{root2Any, any2Any}
+}
 
-	// 求左子树和右子树中any2any的最大值
-	any2anyPath := max(left.Any2AnyPath, right.Any2AnyPath)
-	// max(left.Root2AnyPath, 0) + max(right.Root2AnyPath, 0) + root.Val: 求根节点any2any的最大值
-	any2anyPath = max(any2anyPath, max(left.Root2AnyPath, 0)+
-		max(right.Root2AnyPath, 0)+root.Val)
+var maxPath = -1001
 
-	return ResultType{root2AnyPath, any2anyPath}
+func maxPathSumV2(root *TreeNode) int {
+	maxPath = 0
+	helperV2(root)
+	return maxPath
+}
+
+func helperV2(root *TreeNode) int {
+	if root == nil {
+		return 0
+	}
+
+	left := helperV2(root.Left)
+	if left <= 0 {
+		left = 0
+	}
+
+	right := helperV2(root.Right)
+	if right <= 0 {
+		right = 0
+	}
+
+	maxPath = max(maxPath, left+right+root.Val)
+	return max(root.Val+left, root.Val+right)
 }
 
 func max(a, b int) int {
