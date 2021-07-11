@@ -23,7 +23,7 @@ func canJump(nums []int) bool {
 }
 
 // time complexity: O(n)
-// space complexity: O(n)
+// space complexity: O(1)
 func canJumpV2(nums []int) bool {
 	if len(nums) == 0 {
 		return true
