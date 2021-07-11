@@ -26,7 +26,8 @@ func dfs(triangle [][]int, x, y, sum int, result *int) {
 }
 
 // 分治算法
-// time complexity: O
+// time complexity: O(n^2)
+// space complexity: O(n^2)
 func minimumTotalV2(triangle [][]int) int {
 	if len(triangle) == 0 {
 		return -1
