@@ -76,7 +76,7 @@ func sort(arr []int, left, right int) int {
 }
 
 func main() {
-	num := []int{6, 1, 2, 7, 9, 3, 4, 5, 10, 8}
+	num := []int{1,5,2,4,3}
 	ans := findKthLargest(num, 5)
 	fmt.Println(ans)
 }
