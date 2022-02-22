@@ -46,6 +46,35 @@ func findMaxSumSubArray(k int, arr []int) int {
 	return maxSum
 }
 
+/**
+思路2：使用滑动窗口的方式
+1：使用 windowStart 记录当前窗口开始值，使用全局变量 maxSum 来记录最大值
+2：循环遍历整个数组 arr，使用全局变量 sum 记录当前子数组的和
+3：当 windowEnd - windowStart == k 时
+	3-1：比较当前是否存在最大值
+	3-2：将 arr[windowStart] 从sum中移除，因为这个是即将离开窗口中的元素
+	3-3：windowStart++
+
+time complexity: O(n)
+space complexity: O(1)
+*/
+func findMaxSumSubArray2(k int, arr []int) int {
+	var windowStart int
+	var maxSum int
+	var sum int
+
+	for windowEnd := 0; windowEnd < len(arr); windowEnd++ {
+		sum += arr[windowEnd]
+		if windowEnd-windowStart+1 == k {
+			maxSum = max(maxSum, sum)
+			sum -= arr[windowStart]
+			windowStart++
+		}
+	}
+
+	return maxSum
+}
+
 func max(a, b int) int {
 	if a > b {
 		return a
@@ -65,8 +94,14 @@ func main() {
 	k2 := 2
 
 	maxSum := findMaxSumSubArray(k, arr)
-	fmt.Println("暴力破解法, result=", maxSum)
+	fmt.Println("findMaxSumSubArray, result=", maxSum)
 
 	maxSum2 := findMaxSumSubArray(k2, arr2)
-	fmt.Println("暴力破解法, result=", maxSum2)
+	fmt.Println("findMaxSumSubArray, result=", maxSum2)
+
+	maxSum = findMaxSumSubArray2(k, arr)
+	fmt.Println("findMaxSumSubArray2, result=", maxSum)
+
+	maxSum2 = findMaxSumSubArray2(k2, arr2)
+	fmt.Println("findMaxSumSubArray2, result=", maxSum2)
 }
