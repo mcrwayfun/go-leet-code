@@ -65,6 +65,40 @@ func findMinSubArray(s int, arr []int) int {
 	return minLength
 }
 
+/**
+思路2：使用滑动窗口法
+1：使用全局变量windowStart来记录窗口开始的下标，全局变量sum用来记录当前连续子数组的和。
+全局变量minLength=len(arr)+1来记录符合要求的数组长度的最小值
+2：遍历数组arr，for sum>=S时，
+	2-1：minLength=min(minLength, windowEnd-windowStart+1)
+	2-2：sum=sum-arr[windowStart]
+	2-3：windowStart++
+ */
+func findMinSubArray2(s int, arr []int) int {
+	if len(arr) == 0 {
+		return 0
+	}
+
+	var windowStart int
+	var sum int
+	var minLength = len(arr) + 1
+
+	for windowEnd := 0; windowEnd < len(arr); windowEnd++ {
+		sum += arr[windowEnd]
+		for sum >= s {// sum移除arr[windowStart]后，sum可能还满足sum>=s，此时应该计算minLength
+			minLength = min(minLength, windowEnd - windowStart + 1)
+			sum -= arr[windowStart]
+			windowStart++
+		}
+	}
+
+	if minLength == len(arr) + 1 {
+		return 0
+	}
+
+	return minLength
+}
+
 func min(a, b int) int {
 	if a > b {
 		return b
@@ -85,4 +119,7 @@ func main() {
 
 	fmt.Println("findMinSubArray=", findMinSubArray(s, arr))
 	fmt.Println("findMinSubArray=", findMinSubArray(s2, arr2))
+
+	fmt.Println("findMinSubArray2=", findMinSubArray2(s, arr))
+	fmt.Println("findMinSubArray2=", findMinSubArray2(s2, arr2))
 }
