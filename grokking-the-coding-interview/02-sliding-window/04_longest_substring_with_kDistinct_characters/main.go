@@ -45,6 +45,9 @@ func findLength(str string,k int) int
 窗口记录，再滑动窗口。
 
 像这道题目就是不一样的情况，因为滑动窗口后的长度才是我们需要统计的条件。
+
+time complexity: O(n)
+space complexity: O(k)
 */
 
 func longestSubstringWithKDistinctCharacters(k int, str string) int {
