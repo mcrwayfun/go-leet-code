@@ -31,6 +31,7 @@ func max(a, b int) int {
 }
 
 func main() {
+	// test
 	arr := []int{2, 1, 5, 1, 3, 2}
 	k := 3
 
