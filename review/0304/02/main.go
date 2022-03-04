@@ -12,9 +12,15 @@ func findLength(str string, k int) int {
 	var maxLength int
 
 	for windowEnd := 0; windowEnd < len(str); windowEnd++ {
-		charFrequencyMap[str[windowEnd]] = windowEnd
-		if len(charFrequencyMap) > k {
-			windowStart = charFrequencyMap[str[windowEnd]] + 1
+		charFrequencyMap[str[windowEnd]]++
+		for len(charFrequencyMap) > k {
+			if _, ok := charFrequencyMap[str[windowStart]]; ok {
+				charFrequencyMap[str[windowStart]]--
+				if charFrequencyMap[str[windowStart]] == 0 {
+					delete(charFrequencyMap, str[windowStart])
+				}
+			}
+			windowStart++
 		}
 		maxLength = max(maxLength, windowEnd-windowStart+1)
 	}
@@ -29,9 +35,12 @@ func main() {
 	str2 := "cbbebi"
 	k2 := 3
 
+	str3 := "araaci"
+	k3 := 1
+
 	fmt.Println(findLength(str, k))
 	fmt.Println(findLength(str2, k2))
-
+	fmt.Println(findLength(str3, k3))
 }
 
 func max(a, b int) int {
