@@ -78,6 +78,59 @@ func findPermutation(str string, pattern string) bool {
 	return false
 }
 
+/**
+解法2：滑动窗口法
+1：使用map来统计pattern中字符出现的次数，使用全局变量matched来表示满足pattern的字符个数
+2：遍历字符串str
+	2-1：如果当前字符char存在于map中，则key对应的value--
+	2-2：如果key对应的value为0，则表示有个字符匹配，matched++
+3：如果 matched == map.size, 则表示存在完全匹配的字符，可以返回true
+4：滑动窗口的时机：windowEnd-windowStart+1>=len(pattern)，注意这里是>=，因为窗口长度和pattern长度完全一致的情况下，
+还没有找到排列组合，也需要滑动窗口。
+	4-1：if map[str[windowStart]] == 0, matched--
+	4-2：map[str[windowStart]]++
+*/
+func findPermutation2(str string, pattern string) bool {
+	if len(str) == 0 {
+		return false
+	}
+
+	var charFrequencyMap = make(map[byte]int, len(pattern))
+	for i := 0; i < len(pattern); i++ {
+		charFrequencyMap[pattern[i]]++
+	}
+
+	var windowStart int
+	var matched int
+
+	for windowEnd := 0; windowEnd < len(str); windowEnd++ {
+		rightChar := str[windowEnd]
+		if _, ok := charFrequencyMap[rightChar]; ok {
+			charFrequencyMap[rightChar]--
+			if charFrequencyMap[rightChar] == 0 {
+				matched++
+			}
+		}
+
+		if matched == len(charFrequencyMap) {
+			return true
+		}
+
+		if windowEnd-windowStart+1 >= len(pattern) {
+			leftChar := str[windowStart]
+			if _, ok := charFrequencyMap[leftChar]; ok {
+				if charFrequencyMap[leftChar] == 0 {
+					matched--
+				}
+				charFrequencyMap[leftChar]++ // 返回移除的参数到 charFrequencyMap中
+			}
+			windowStart++
+		}
+	}
+
+	return false
+}
+
 func main() {
 	str := "oidbcaf"
 	pattern := "abc"
@@ -95,6 +148,11 @@ func main() {
 	fmt.Println(findPermutation(str2, pattern2))
 	fmt.Println(findPermutation(str3, pattern3))
 	fmt.Println(findPermutation(str4, pattern4))
+
+	fmt.Println(findPermutation2(str, pattern))
+	fmt.Println(findPermutation2(str2, pattern2))
+	fmt.Println(findPermutation2(str3, pattern3))
+	fmt.Println(findPermutation2(str4, pattern4))
 }
 
 func copyMap(desc, src map[byte]int) {
