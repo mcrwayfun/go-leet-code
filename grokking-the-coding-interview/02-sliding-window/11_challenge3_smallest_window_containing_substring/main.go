@@ -47,6 +47,9 @@ func findSubstring(str string, pattern string) string
 			4-3-2-1: if map[leftChar] == 0 then matched--
 			4-3-2-2: map[leftChar]++
 		4-3-3: windowStart++
+
+time complexity: O(n+m)
+space complexity: O(m)
 */
 func findSubstring(str string, pattern string) string {
 	if len(str) == 0 {
