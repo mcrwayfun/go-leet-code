@@ -30,6 +30,9 @@ func remove(arr []int) int
 由于不允许使用额外的空间（否则可以使用map来存储统计ele出现的次数）
 1：使用双指针，start指针指向当前可以被替换的下标，end指针则遍历arr。
 每当我们遇到一个非重复的数字，就将其移动到最后一个非重复的数字旁边。
+
+time complexity: O(n)
+space complexity: O(1)
 */
 func remove(arr []int) int {
 	var nextNonDuplicate = 1
