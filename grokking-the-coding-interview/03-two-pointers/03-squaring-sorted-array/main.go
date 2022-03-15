@@ -84,10 +84,38 @@ func makeSquares(arr []int) []int {
 	return newArr
 }
 
+func makeSquares2(arr []int) []int {
+	var highIndex = len(arr) - 1
+	var left = 0
+	var right = len(arr) - 1
+	ret := make([]int, len(arr))
+
+	for left <= right {
+		leftNum := arr[left] * arr[left]
+		rightNum := arr[right] * arr[right]
+
+		if leftNum > rightNum {
+			ret[highIndex] = leftNum
+			highIndex--
+			left++
+		} else {
+			ret[highIndex] = rightNum
+			highIndex--
+			right--
+		}
+	}
+
+	return ret
+}
+
 func main() {
 	arr := []int{-2, -1, 0, 2, 3}
 	fmt.Println(makeSquares(arr))
 
 	arr2 := []int{-3, -1, 0, 1, 2}
 	fmt.Println(makeSquares(arr2))
+
+	fmt.Println(makeSquares2(arr))
+
+	fmt.Println(makeSquares2(arr2))
 }
