@@ -33,8 +33,11 @@ func searchTriplets(arr []int, target int) int
 /**
 思路：
 这道题是求 三数之和 < target 的场景，可以转换为 固定arr[i]，然后判断：
-1：arr[j] + arr[k] < target then count++
+1：arr[j] + arr[k] < target then count += k - j, 因为在这个区间的数都满足 三数之和 < target
 2：arr[j] + arr[k] >= target then k--
+
+time complexity: O(lgn * n + n^2)
+space complexity: O(1)
 */
 func searchTriplets(arr []int, target int) int {
 	if len(arr) == 0 {
