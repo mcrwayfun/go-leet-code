@@ -1,5 +1,10 @@
 package main
 
+import (
+	"fmt"
+	"sort"
+)
+
 /**
 题目：Given an array of unsorted numbers and a target number,
 find all unique quadruplets in it, whose sum is equal to the target number.
@@ -23,6 +28,69 @@ func searchQuadruplets(arr []int, target int) [][]int
 */
 
 /**
-思路：这道题比求 三数之和 和 target 的比较多了一位，可以转变成固定前 n-2个值，
-剩余的去
+思路：这道题比求 三数之和 和 target 的比较多了一位，这道题可以转换为 n^3的算法
+
+time complexity: O(n^3)
+space complexity: O(n)
 */
+func searchQuadruplets(arr []int, target int) [][]int {
+	if len(arr) == 0 {
+		return [][]int{}
+	}
+
+	sort.Ints(arr)
+
+	var quadruplets [][]int
+	for i := 0; i < len(arr)-3; i++ {
+		if i > 0 && arr[i] == arr[i-1] {
+			continue
+		}
+
+		for j := i + 1; j < len(arr)-2; j++ {
+			if j > i+1 && arr[j] == arr[j-1] {
+				continue
+			}
+
+			searchPairs(arr, target, i, j, &quadruplets)
+		}
+	}
+
+	return quadruplets
+}
+
+func searchPairs(arr []int, target int, first,
+	second int, quadruplets *[][]int) {
+	left := second + 1
+	right := len(arr) - 1
+
+	for left < right {
+		quadrupletSum := arr[first] + arr[second] + arr[left] + arr[right]
+		if quadrupletSum == target {
+			*quadruplets = append(*quadruplets, []int{arr[first], arr[second], arr[left], arr[right]})
+			left++
+			right--
+
+			for left < right && arr[left] == arr[left-1] {
+				left++
+			}
+
+			for left < right && arr[right] == arr[right+1] {
+				right--
+			}
+		} else if quadrupletSum < target {
+			left++
+		} else {
+			right--
+		}
+	}
+}
+
+func main() {
+	arr := []int{4, 1, 2, -1, 1, -3}
+	target := 1
+	fmt.Println(searchQuadruplets(arr, target))
+
+	arr2 := []int{2, 0, -1, 1, -2, 2}
+	target2 := 2
+	fmt.Println(searchQuadruplets(arr2, target2))
+}
