@@ -1,66 +1,55 @@
 package main
 
-import "fmt"
+/**
+给你单链表的头节点 head ，请你反转链表，并返回反转后的链表。
+
+示例 1：
+输入：head = [1,2,3,4,5]
+输出：[5,4,3,2,1]
+
+示例 2：
+输入：head = [1,2]
+输出：[2,1]
+
+示例 3：
+输入：head = []
+输出：[]
+
+来源：力扣（LeetCode）
+链接：https://leetcode-cn.com/problems/reverse-linked-list
+著作权归领扣网络所有。商业转载请联系官方授权，非商业转载请注明出处。
+
+模板：func reverseList(head *ListNode) *ListNode
+*/
 
 type ListNode struct {
 	Val  int
 	Next *ListNode
 }
 
-func (l *ListNode) String() string {
-	cur := l
-	var str string
-	for cur != nil {
-		str = fmt.Sprintf("%s %d", str, cur.Val)
-		cur = cur.Next
-	}
-	return str
-}
+/**
+解法：反转链表并返回反转后的头节点：需要维护三个变量，一个是指向当前节点的cur，
+一个是指向当前节点的先前节点的pre，一个是指向当前节点的下一节点的next。
 
-// 反转链表
+举个例子，比如有 1->2->3->4->5->null
+pre=null, cur=1, next=2
+1：先记录当前节点的next关系，因为反转后这个关系就不存在了。next = cur.Next
+2：当前节点指向的下一节点反转，cur.Next = pre
+3：pre移动到cur的位置，pre = cur
+4：cur移动到next的位置，cur = next
+*/
 func reverseList(head *ListNode) *ListNode {
 	if head == nil {
 		return head
 	}
 
-	// 新的头结点
-	var newHead *ListNode = nil
-	cur := head
+	var cur = head
+	var pre *ListNode
 	for cur != nil {
-		// 1:备份下一个结点
-		tmp := cur.Next
-		// 2:当前结点指向新的头结点
-		cur.Next = newHead
-		// 3:新的头结点移动到当前结点
-		newHead = cur
-		// 4:head结点移动
-		cur = tmp
+		next := cur.Next
+		cur.Next = pre
+		pre = cur
+		cur = next
 	}
-
-	return newHead
-}
-
-// 反转链表
-func reverseList2(head *ListNode) *ListNode {
-	if head == nil || head.Next == nil {
-		return head
-	}
-
-	// 反转后的头指针
-	ret := reverseList(head.Next)
-	head.Next.Next = head
-	head.Next = nil
-	return ret
-}
-
-func main() {
-	tail := &ListNode{-1, nil}
-	head5 := &ListNode{5, tail}
-	head4 := &ListNode{4, head5}
-	head3 := &ListNode{3, head4}
-	head2 := &ListNode{2, head3}
-	head1 := &ListNode{1, head2}
-
-	newHead := reverseList(head1)
-	println(newHead.String())
+	return pre
 }
