@@ -37,6 +37,9 @@ pre=null, cur=1, next=2
 2：当前节点指向的下一节点反转，cur.Next = pre
 3：pre移动到cur的位置，pre = cur
 4：cur移动到next的位置，cur = next
+
+time complexity: O(n)
+space complexity: O(1)
 */
 func reverseList(head *ListNode) *ListNode {
 	if head == nil {
