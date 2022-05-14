@@ -79,6 +79,48 @@ func countSubstrings(s string) int {
 	return count
 }
 
+/**
+解法2：解法1使用了二维数组来存储访问过路径是否为回文串。
+使用另外一种方法来，假设现在有字符串 aba
+1：从最左边的字符a开始，a本身是回文串，count++。以a向左右两边拓展判断，
+因为向左已经越界，所以结束。
+2：从b开始，b本身是回文串，count++。以b向左右两边拓展，aba是回文串，
+count++。
+3：以最右边的a开始，a本身是回文串，count++。以a向左右两边拓展判断，
+因为向右已经越界，所以结束。
+
+上述这种方案仅考虑了字符串长度为奇数的情况，当字符串为偶数时，中心的字母
+有两个，所以起始的left和right初始化为i和i+1
+
+time complexity: O(n^2)
+space complexity: O(1)
+*/
+func countSubstringsV2(s string) int {
+	if len(s) == 0 {
+		return 0
+	}
+
+	var count int
+	for i := 0; i < len(s); i++ {
+		count += expand(s, i, i)
+		count += expand(s, i, i+1)
+	}
+	return count
+}
+
+func expand(s string, left, right int) int {
+	var count int
+	// s[left] == s[right] 放在外层判断的原因是，
+	// 如果开始不是回文串，那么后面都不可能是回文串
+	for left >= 0 && right < len(s) && s[left] == s[right]{
+		count++
+		left--
+		right++
+	}
+	return count
+}
+
 func main() {
-	fmt.Println(countSubstrings("aba"))
+	fmt.Println(countSubstrings("fdsklf"))
+	fmt.Println(countSubstringsV2("fdsklf"))
 }
