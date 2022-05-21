@@ -58,6 +58,45 @@ func minDepth(root *TreeNode) int {
 	return min(minDepth(root.Left), minDepth(root.Right)) + 1
 }
 
+/**
+解法2：使用非递归的方式来求最小深度
+1：定义一个队列，将树的根节点入队
+2：队列不为空则执行下列步骤
+	2-1：当前需要遍历的子节点 size=queue.size
+	2-2: 遍历子节点，如果子节点的左右子树均为空，则直接返回depth
+	2-3：如果左子树非空，则左子树入队；右子树非空，右子树入队
+	2-4：结束当前size的循环，depth++
+
+time complexity: O(n)
+space complexity: O(n)
+*/
+func minDepthWithIteration(root *TreeNode) int {
+	if root == nil {
+		return 0
+	}
+
+	var queue = []*TreeNode{root}
+	var node *TreeNode
+	var depth = 1
+	for len(queue) > 0 {
+		size := len(queue)
+		for i := 0; i < size; i++ {
+			node, queue = queue[0], queue[1:]
+			if node.Left == nil && node.Right == nil {
+				return depth
+			}
+			if node.Left != nil {
+				queue = append(queue, node.Left)
+			}
+			if node.Right != nil {
+				queue = append(queue, node.Right)
+			}
+		}
+		depth++
+	}
+	return -1
+}
+
 func min(a, b int) int {
 	if a > b {
 		return b
