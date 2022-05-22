@@ -40,6 +40,7 @@ func isAlphanumeric(b byte) bool {
 	return (b <= 'z' && b >= 'a') || (b <= 'Z' && b >= 'A') || (b <= '9' && b >= '0')
 }
 
+// docs
 func main() {
 	fmt.Println(isPalindrome("race a car"))
 }
