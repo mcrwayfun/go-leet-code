@@ -41,7 +41,6 @@ func isAlphanumeric(b byte) bool {
 }
 
 // docs
-// docs update
 func main() {
 	fmt.Println(isPalindrome("race a car"))
 }
