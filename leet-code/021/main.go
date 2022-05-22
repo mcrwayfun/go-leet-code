@@ -4,36 +4,66 @@ import (
 	"fmt"
 )
 
-func mergeTwoLists(l1 *ListNode, l2 *ListNode) *ListNode {
-	if l1 == nil {
-		return l2
-	}
+/**
+将两个升序链表合并为一个新的 升序 链表并返回。新链表是通过拼接给定的两个链表的所有节点组成的。
 
-	if l2 == nil {
-		return l1
-	}
+示例 1：
+输入：l1 = [1,2,4], l2 = [1,3,4]
+输出：[1,1,2,3,4,4]
 
-	dummy := &ListNode{}
-	cur := dummy
-	for l1 != nil && l2 != nil {
-		if l1.Val <= l2.Val {
-			cur.Next = l1
-			l1 = l1.Next
+示例 2：
+输入：l1 = [], l2 = []
+输出：[]
+
+示例 3：
+输入：l1 = [], l2 = [0]
+输出：[0]
+
+来源：力扣（LeetCode）
+链接：https://leetcode.cn/problems/merge-two-sorted-lists
+著作权归领扣网络所有。商业转载请联系官方授权，非商业转载请注明出处。
+
+模板：
+func mergeTwoLists(list1 *ListNode, list2 *ListNode) *ListNode{}
+
+type ListNode struct {
+	Val  int
+	Next *ListNode
+}
+*/
+
+/**
+使用一个指针p来遍历链表l1和l2
+1：如果L1.Val < l2.Val, 则
+	p.Next = l1 then l1 = l1.Next
+2：否则 p.Next = l2 then l2 = l2.Next
+3：p = p.Next
+4：循环结束后，l1和l2可能存在未遍历结束的情况，哪个不为空则直接
+将其拼在p后面即可
+
+time complexity: O(m+n)
+space complexity: O(1)
+*/
+func mergeTwoLists(list1 *ListNode, list2 *ListNode) *ListNode {
+	var dummy = &ListNode{}
+	p := dummy
+	for list1 != nil && list2 != nil {
+		if list1.Val < list2.Val {
+			p.Next = list1
+			list1 = list1.Next
 		} else {
-			cur.Next = l2
-			l2 = l2.Next
+			p.Next = list2
+			list2 = list2.Next
 		}
-		cur = cur.Next
+		p = p.Next
 	}
 
-	if l1 != nil {
-		cur.Next = l1
+	if list1 != nil {
+		p.Next = list1
 	}
-
-	if l2 != nil {
-		cur.Next = l2
+	if list2 != nil {
+		p.Next = list2
 	}
-
 	return dummy.Next
 }
 
