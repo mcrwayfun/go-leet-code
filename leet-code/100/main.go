@@ -47,32 +47,30 @@ func isSameTreeRecursive(p *TreeNode, q *TreeNode) bool {
 }
 
 /**
-解题思路：使用循环的方式来判断，需要申请额外的数据结构栈
+解题思路：使用循环的方式来判断，需要申请额外的数据结构队列
 1：先写结束条件，如果左右子树同时为空，直接返回true
-2：申请额外的数据结构栈，将当前左右子树push进栈
-3：如果栈不为空，则执行以下的步骤
-	3-1：依次pop栈顶元素s和t
+2：申请额外的数据结构队列，将当前左右子树push进队列
+3：如果队列不为空，则执行以下的步骤
+	3-1：依次pop队列顶元素s和t
 	3-2：if s == nil && t == nil continue // 当前相等，循环判断
 	3-3：if s == nil || t == nil return false
 	3-4：if s.val != t.val return false
-	3-5：stack.push(s.left), stack.push(t.left), stack.push(s.right), stack.push(t.right)
+	3-5：queue.push(s.left), queue.push(t.left), queue.push(s.right), queue.push(t.right)
 
 time complexity: O(n)
 space complexity: O(n)
 */
-func isSameTreeIterative(p *TreeNode, q *TreeNode) bool {
+func isSameTreeIteration(p *TreeNode, q *TreeNode) bool {
 	if p == nil && q == nil {
 		return true
 	}
 
-	var stack []*TreeNode
-	stack = append(stack, p, q)
-
-	for len(stack) > 0 {
-		s := stack[0]
-		stack = stack[1:]
-		t := stack[0]
-		stack = stack[1:]
+	var queue = []*TreeNode{p, q}
+	var s *TreeNode
+	var t *TreeNode
+	for len(queue) > 0 {
+		s, queue = queue[0], queue[1:]
+		t, queue = queue[0], queue[1:]
 
 		if s == nil && t == nil {
 			continue
@@ -84,9 +82,8 @@ func isSameTreeIterative(p *TreeNode, q *TreeNode) bool {
 			return false
 		}
 
-		stack = append(stack, s.Left, t.Left, s.Right, t.Right)
+		queue = append(queue, s.Left, t.Left, s.Right, t.Right)
 	}
-
 	return true
 }
 
