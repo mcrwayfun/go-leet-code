@@ -65,15 +65,15 @@ func isSymmetricTreeRecursive(root *TreeNode) bool {
 }
 
 /**
-将递归的方法转换为普通的循环方法，需要使用栈来实现
-1：申明一个栈stack，假设左子树为s，右子树为t
-2：将s和t入栈
-3：只要栈不为空，则不断执行操作
-	3-1：将栈顶两个元素pop出来，分别为s和t
+将递归的方法转换为普通的循环方法，需要使用队列来实现
+1：申明一个队列queue，假设左子树为s，右子树为t
+2：将s和t入队列
+3：只要队列不为空，则不断执行操作
+	3-1：将队列顶两个元素pop出来，分别为s和t
 	3-2：如果s == null && t == null continue
 	3-3：如果s == null || t == null return false
 	3-4：如果s.val != t.val return false
-	3-5: stack.push(s.left), stack.push(t.right), stack.push(s.right), stack.push(t.left)
+	3-5: queue.push(s.left), queue.push(t.right), queue.push(s.right), queue.push(t.left)
 4: 结束可以返回true（没有找到不相等的情况）
 */
 func isSymmetricTreeIterative(root *TreeNode) bool {
@@ -81,15 +81,12 @@ func isSymmetricTreeIterative(root *TreeNode) bool {
 		return true
 	}
 
-	var stack []*TreeNode
-	stack = append(stack, root.Left)
-	stack = append(stack, root.Right)
-
-	for len(stack) > 0 {
-		s := stack[0]
-		stack = stack[1:]
-		t := stack[0]
-		stack = stack[1:]
+	var queue = []*TreeNode{root.Left, root.Right}
+	var s *TreeNode
+	var t *TreeNode
+	for len(queue) > 0 {
+		s, queue = queue[0], queue[1:]
+		t, queue = queue[0], queue[1:]
 
 		if s == nil && t == nil {
 			continue
@@ -100,11 +97,8 @@ func isSymmetricTreeIterative(root *TreeNode) bool {
 		if s.Val != t.Val {
 			return false
 		}
-
-		stack = append(stack, s.Left)
-		stack = append(stack, t.Right)
-		stack = append(stack, s.Right)
-		stack = append(stack, t.Left)
+		// s和t均为非空
+		queue = append(queue, s.Left, t.Right, s.Right, t.Left)
 	}
 
 	return true
