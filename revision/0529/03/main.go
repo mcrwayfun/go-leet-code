@@ -22,7 +22,7 @@ func isPalindrome(head *ListNode) bool {
 		cur = next
 	}
 
-	if length & 1 == 1 {// 奇数向前挪动一个位置
+	if length&1 == 1 { // 奇数向前挪动一个位置
 		cur = cur.Next
 	}
 
@@ -34,6 +34,27 @@ func isPalindrome(head *ListNode) bool {
 		prev = prev.Next
 	}
 
+	return true
+}
+
+// time complexity: O(n)
+// space complexity: O(n)
+func isPalindromeStack(head *ListNode) bool {
+	if head == nil {
+		return false
+	}
+
+	var stack = make([]*ListNode, 0)
+	for p := head; p != nil; p = p.Next {
+		stack = append(stack, p)
+	}
+
+	for p := head; p != nil; p = p.Next {
+		if p.Val != stack[len(stack)-1].Val {
+			return false
+		}
+		stack = stack[:len(stack)-1]
+	}
 	return true
 }
 
