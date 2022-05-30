@@ -1,5 +1,7 @@
 package main
 
+import "fmt"
+
 /**
 给你一个字符串 s，找到 s 中最长的回文子串。
 
@@ -80,23 +82,29 @@ func longestPalindrome(s string) string {
 		length1 := expand(s, i, i)
 		length2 := expand(s, i, i+1)
 		length := max(length1, length2)
-
 		if length > maxLen {
+			// i是回文子串的中心点
+			// (length-1)/2是回文子串的左边的长度
+			// 比如有数组arr=[a,b,a], (3-1)/2=1
+			// 比如有数组arr=[a,b,b,a], (4-1)/2=1
+			// i - (length-1)/2 得到的就是回文子串的开始index
 			subStart = i - (length-1)/2
 			maxLen = length
 		}
 	}
+	// s = s[startIndex:endIndex]
+	// 从下标 startIndex 到 endIndex-1 下的元素创建为一个新的切片
 	return s[subStart : subStart+maxLen]
 }
 
 func expand(s string, left, right int) int {
-	var count int
 	for left >= 0 && right < len(s) && s[left] == s[right] {
 		left--
 		right++
-		count++
 	}
-	return count
+	// 不满足或者已经超出边界时，right和left的值应该为:
+	// (right-1) - (left+1) + 1
+	return right - left - 1
 }
 
 func max(a, b int) int {
@@ -104,4 +112,9 @@ func max(a, b int) int {
 		return a
 	}
 	return b
+}
+
+func main() {
+	fmt.Println(longestPalindrome("babad"))
+	fmt.Println(longestPalindrome("ccc"))
 }
