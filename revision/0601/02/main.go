@@ -1,6 +1,6 @@
 package main
 
-// time complexity: O(n)
+// time complexity: O(n^2)
 // space complexity: O(1)
 func countSubstrings(s string) int {
 	if len(s) == 0 {
@@ -21,6 +21,40 @@ func expand(s string, left int, right int) int {
 		left--
 		right++
 		count++
+	}
+	return count
+}
+
+// time complexity: O(n^2)
+// space complexity: O(n^2)
+func countSubstringsDP(s string) int {
+	if len(s) == 0 {
+		return 0
+	}
+
+	var visited = make([][]bool, len(s))
+	for i := 0; i < len(s); i++ {
+		visited[i] = make([]bool, len(s))
+	}
+
+	var n = len(s)
+	var count int
+	for i := n - 1; i >= 0; i-- {
+		for j := i; j <= n-1; j++ {
+			if i == j {
+				visited[i][j] = true
+			} else if i+1 == j && s[i] == s[j] {
+				visited[i][j] = true
+			} else {
+				if s[i] == s[j] && visited[i+1][j-1] {
+					visited[i][j] = true
+				}
+			}
+
+			if visited[i][j] {
+				count++
+			}
+		}
 	}
 	return count
 }
