@@ -26,7 +26,7 @@ type TreeNode struct {
 	Left  *TreeNode
 	Right *TreeNode
 }
- */
+*/
 
 // time complexity: O(n)
 // space complexity: O(n)
@@ -44,6 +44,35 @@ func inorderTraversalHelper(root *TreeNode, res *[]int) {
 	inorderTraversalHelper(root.Left, res)
 	*res = append(*res, root.Val)
 	inorderTraversalHelper(root.Right, res)
+}
+
+/**
+使用非递归的方式来输出二叉树的中序遍历：左中右，
+所以可以使用stack来存储遍历的顺序，可以接单归纳为：
+1：一直遍历直到没有左节点，将它们全部压入栈中
+2：弹出节点
+3：压入右节点
+重复上述步骤
+
+time complexity: O(n)
+space complexity: O(n)
+*/
+func inorderTraversalIterator(root *TreeNode) []int {
+	var stack []*TreeNode
+	var s *TreeNode
+	var res []int
+
+	for root != nil || len(stack) > 0 {
+		for root != nil {
+			stack = append(stack, root)
+			root = root.Left
+		}
+
+		s, stack = stack[len(stack)-1], stack[:len(stack)-1]
+		res = append(res, s.Val)
+		root = s.Right
+	}
+	return res
 }
 
 type TreeNode struct {
