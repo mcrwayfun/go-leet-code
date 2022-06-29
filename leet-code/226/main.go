@@ -41,6 +41,29 @@ func invertTree(root *TreeNode) *TreeNode {
 	return root
 }
 
+// time complexity: O(n)
+// space complexity: O(1)
+func invertTreeIterator(root *TreeNode) *TreeNode {
+	if root == nil {
+		return root
+	}
+
+	var queue = []*TreeNode{root}
+	var s *TreeNode
+	for len(queue) > 0 {
+		s, queue = queue[0], queue[1:]
+
+		s.Left, s.Right = s.Right, s.Left
+		if s.Left != nil {
+			queue = append(queue, s.Left)
+		}
+		if s.Right != nil {
+			queue = append(queue, s.Right)
+		}
+	}
+	return root
+}
+
 type TreeNode struct {
 	Val   int
 	Left  *TreeNode
