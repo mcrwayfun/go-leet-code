@@ -1,47 +1,52 @@
 package main
 
-import "fmt"
+/**
+给你一个链表的头节点 head 和一个整数 val ，请你删除链表中所有满足 Node.val == val 的节点，并返回 新的头节点 。
 
-func removeElements(head *ListNode, val int) *ListNode {
-	if head == nil {
-		return nil
-	}
+示例 1：
+输入：head = [1,2,6,3,4,5,6], val = 6
+输出：[1,2,3,4,5]
 
-	dummyNode := &ListNode{Next: head}
-	cur := dummyNode
-	for cur.Next != nil {
-		if cur.Next.Val == val {
-			cur.Next = cur.Next.Next
-		}else{
-			cur = cur.Next
-		}
-	}
+示例 2：
+输入：head = [], val = 1
+输出：[]
 
-	return dummyNode.Next
-}
+示例 3：
+输入：head = [7,7,7,7], val = 7
+输出：[]
 
-func main(){
-	head5 := &ListNode{5, nil}
-	head4 := &ListNode{4, head5}
-	head3 := &ListNode{3, head4}
-	head2 := &ListNode{2, head3}
-	head1 := &ListNode{1, head2}
+来源：力扣（LeetCode）
+链接：https://leetcode.cn/problems/remove-linked-list-elements
+著作权归领扣网络所有。商业转载请联系官方授权，非商业转载请注明出处。
 
-	elements := removeElements(head1, 3)
-	println(elements.String())
-}
+func removeElements(head *ListNode, val int) *ListNode {}
 
 type ListNode struct {
 	Val  int
 	Next *ListNode
 }
+*/
 
-func (l *ListNode) String() string {
-	cur := l
-	var str string
-	for cur != nil {
-		str = fmt.Sprintf("%s %d", str, cur.Val)
-		cur = cur.Next
+// time complexity: O(n)
+// space complexity: O(1)
+func removeElements(head *ListNode, val int) *ListNode {
+	if head == nil {
+		return head
 	}
-	return str
+
+	dummy := &ListNode{Next: head}
+	notEqual := dummy
+	for notEqual.Next != nil {
+		if notEqual.Next.Val == val {
+			notEqual.Next = notEqual.Next.Next
+		} else {
+			notEqual = notEqual.Next
+		}
+	}
+	return dummy.Next
+}
+
+type ListNode struct {
+	Val  int
+	Next *ListNode
 }
