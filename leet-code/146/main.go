@@ -1,5 +1,7 @@
 package main
 
+import "fmt"
+
 /**
 请你设计并实现一个满足 LRU (最近最少使用) 缓存 约束的数据结构。
 实现 LRUCache 类：
@@ -111,7 +113,7 @@ func (c *LRUCache) Put(key int, value int) {
 
 func (c *LRUCache) move2head(cur *Node) {
 	if cur == c.Head {
-		c.Head = c.Head.Next
+		c.Head = c.Head.Prev
 		return
 	}
 
@@ -125,6 +127,44 @@ func (c *LRUCache) move2head(cur *Node) {
 	c.Head.Next = cur
 	cur.Prev = c.Head
 }
+
+func main() {
+	/**
+	["LRUCache","put","put","get","put","get","put","get","get","get"]
+	[[2],[1,1],[2,2],[1],[3,3],[2],[4,4],[1],[3],[4]]
+	*/
+	//obj := Constructor(2)
+	//obj.Put(1, 1)
+	//obj.Put(2, 2)
+	//fmt.Println(obj.Get(1))
+	//obj.Put(3, 3)
+	//fmt.Println(obj.Get(2))
+	//obj.Put(4, 4)
+	//fmt.Println(obj.Get(1))
+	//fmt.Println(obj.Get(3))
+	//fmt.Println(obj.Get(4))
+
+	/**
+	["LRUCache","put","put","put","put","get","get","get","get","put","get","get","get","get","get"]
+	[[3],[1,1],[2,2],[3,3],[4,4],[4],[3],[2],[1],[5,5],[1],[2],[3],[4],[5]]
+	 */
+	obj := Constructor(3)
+	obj.Put(1, 1)
+	obj.Put(2, 2)
+	obj.Put(3, 3)
+	obj.Put(4, 4)
+	fmt.Println(obj.Get(4))
+	fmt.Println(obj.Get(3))
+	fmt.Println(obj.Get(2))
+	fmt.Println(obj.Get(1))
+	obj.Put(5, 5)
+	fmt.Println(obj.Get(1))
+	fmt.Println(obj.Get(2))
+	fmt.Println(obj.Get(3))
+	fmt.Println(obj.Get(4))
+	fmt.Println(obj.Get(5))
+}
+
 /**
  * Your LRUCache object will be instantiated and called as such:
  * obj := Constructor(capacity);
