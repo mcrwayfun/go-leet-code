@@ -68,6 +68,36 @@ func min(a, b int) int {
 	return a
 }
 
+/**
+可以使用一维数组来存储最优路径解d[j]
+1：对于首行有：d[j]=d[j-1]+a[0,j]
+2：对于第二行开始有：
+	2-1：初始化行首位元素，由上一行的首位+当前元素求值，d[0]=d[0]+a[i][0]
+	2-2：d[j]=min(d[j],d[j-1])+a[i][j]
+
+time complexity: O(m*n)
+space complexity: O(n)
+*/
+func minPathSumWith1DArray(grid [][]int) int {
+	var m = len(grid)
+	var n = len(grid[0])
+
+	d := make([]int, n)
+	d[0] = grid[0][0]
+	for j := 1; j < n; j++ {
+		d[j] = d[j-1] + grid[0][j]
+	}
+
+	for i := 1; i < m; i++ {
+		d[0] += grid[i][0]
+		for j := 1; j < n; j++ {
+			d[j] = min(d[j-1], d[j]) + grid[i][j]
+		}
+	}
+
+	return d[n-1]
+}
+
 func main() {
 	grid := [][]int{{1, 3, 1}, {1, 5, 1}, {4, 2, 1}}
 	pathSum := minPathSum(grid)
@@ -75,5 +105,13 @@ func main() {
 
 	grid = [][]int{{1, 3, 1}, {4, 5, 6}}
 	pathSum = minPathSum(grid)
+	fmt.Println(pathSum)
+
+	grid = [][]int{{1, 3, 1}, {1, 5, 1}, {4, 2, 1}}
+	pathSum = minPathSumWith1DArray(grid)
+	fmt.Println(pathSum)
+
+	grid = [][]int{{1, 3, 1}, {4, 5, 6}}
+	pathSum = minPathSumWith1DArray(grid)
 	fmt.Println(pathSum)
 }
