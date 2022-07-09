@@ -73,7 +73,7 @@ func Constructor(capacity int) LRUCache {
 	head := &Node{-1, -1, nil, nil}
 	cur := head
 
-	// 构造一个双向链表
+	// 构造一个双向链表（注意是双向的，比正常构建少个元素）
 	for i := 0; i < capacity-1; i++ {
 		cur.Next = &Node{-1, -1, cur, nil}
 		cur = cur.Next
