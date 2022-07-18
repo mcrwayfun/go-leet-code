@@ -30,6 +30,25 @@ solution.shuffle();    // 随机返回数组 [1, 2, 3] 打乱后的结果。例�
 来源：力扣（LeetCode）
 链接：https://leetcode.cn/problems/shuffle-an-array
 著作权归领扣网络所有。商业转载请联系官方授权，非商业转载请注明出处。
+
+type Solution struct {
+
+}
+
+
+func Constructor(nums []int) Solution {
+
+}
+
+
+func (this *Solution) Reset() []int {
+
+}
+
+
+func (this *Solution) Shuffle() []int {
+
+}
 */
 
 type Solution struct {
