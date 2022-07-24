@@ -55,7 +55,8 @@ func getSkyline(buildings [][]int) [][]int {
 	var maxHeap = &MaxHeap{}
 	heap.Init(maxHeap)
 	// 加入初始的高度0
-	maxHeap.Push(0)
+	heap.Push(maxHeap, 0)
+
 	// 上一次的最大高度
 	var preHeight int
 	// 遍历高度数组
