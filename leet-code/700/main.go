@@ -1,43 +1,57 @@
 package main
 
-import (
-	. "../tool/tree"
-	"fmt"
-)
+/**
+给定二叉搜索树（BST）的根节点root和一个整数值val。
+你需要在 BST 中找到节点值等于val的节点。 返回以该节点为根的子树。 如果节点不存在，则返回null。
 
-// time complexity: O(n)
-// space complexity: O(1)
+示例 1:
+输入：root = [4,2,7,1,3], val = 2
+输出：[2,1,3]
+
+示例 2:
+输入：root = [4,2,7,1,3], val = 5
+输出：[]
+
+来源：力扣（LeetCode）
+链接：https://leetcode.cn/problems/search-in-a-binary-search-tree
+著作权归领扣网络所有。商业转载请联系官方授权，非商业转载请注明出处。
+
+func searchBST(root *TreeNode, val int) *TreeNode {}
+
+type TreeNode struct {
+	Val   int
+	Left  *TreeNode
+	Right *TreeNode
+}
+*/
+
+// time complexity: O(lgn)
+// space complexity: O(h)
 func searchBST(root *TreeNode, val int) *TreeNode {
-	if root == nil {
-		return nil
-	}
-
-	return dfs(root, val)
-}
-
-func dfs(root *TreeNode, val int) *TreeNode {
-	if root == nil {
-		return nil
-	}
-
-	left := dfs(root.Left, val)
-	if left != nil {
-		return left
-	}
-	if root.Val == val {
+	if root == nil || root.Val == val {
 		return root
+	} else if root.Val > val {
+		return searchBST(root.Left, val)
+	} else {
+		return searchBST(root.Right, val)
 	}
-	right := dfs(root.Right, val)
-	if right != nil {
-		return right
-	}
-	return nil
 }
 
-func main() {
-	nodes := []int{4, 2, 7, 1, 3}
-	root := Ints2TreeNode(nodes)
-	val := 2
-	bst := searchBST(root, val)
-	fmt.Println(Tree2InOrder(bst))
+// time complexity: O(lgn)
+// space complexity: O(1)
+func searchBSTIterative(root *TreeNode, val int) *TreeNode {
+	for root != nil && root.Val != val {
+		if root.Val > val {
+			root = root.Left
+		} else {
+			root = root.Right
+		}
+	}
+	return root
+}
+
+type TreeNode struct {
+	Val   int
+	Left  *TreeNode
+	Right *TreeNode
 }
