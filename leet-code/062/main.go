@@ -1,48 +1,62 @@
 package main
 
-import "fmt"
+/**
+一个机器人位于一个 m x n网格的左上角 （起始点在下图中标记为 “Start” ）。
+
+机器人每次只能向下或者向右移动一步。机器人试图达到网格的右下角（在下图中标记为 “Finish” ）。
+
+问总共有多少条不同的路径？
+
+示例 1：
+输入：m = 3, n = 7
+输出：28
+
+示例 2：
+输入：m = 3, n = 2
+输出：3
+解释：
+从左上角开始，总共有 3 条路径可以到达右下角。
+1. 向右 -> 向下 -> 向下
+2. 向下 -> 向下 -> 向右
+3. 向下 -> 向右 -> 向下
+
+示例 3：
+输入：m = 7, n = 3
+输出：28
+
+示例 4：
+输入：m = 3, n = 3
+输出：6
+
+来源：力扣（LeetCode）
+链接：https://leetcode.cn/problems/unique-paths
+著作权归领扣网络所有。商业转载请联系官方授权，非商业转载请注明出处。
+*/
 
 // time complexity: O(n^2)
 // space complexity: O(n^2)
 func uniquePaths(m int, n int) int {
-	if m <= 0 || n <= 0 {
+	if m < 1 || n < 1 {
 		return 0
 	}
 
-	fn := initFn(m, n)
-	// 到第一列每个节点的路径为1
-	for i := 0; i < m; i++ {
-		fn[i][0] = 1
+	var d = make([][]int, m)
+	for i := range d {
+		d[i] = make([]int, n)
 	}
-	// 到第一行每个节点的路径为1
-	for i := 0; i < n; i++ {
-		fn[0][i] = 1
+
+	for i := 0; i < m; i++ {
+		d[i][0] = 1
+	}
+
+	for j := 0; j < n; j++ {
+		d[0][j] = 1
 	}
 
 	for i := 1; i < m; i++ {
 		for j := 1; j < n; j++ {
-			fn[i][j] = fn[i-1][j] + fn[i][j-1]
+			d[i][j] = d[i-1][j] + d[i][j-1]
 		}
 	}
-
-	return fn[m-1][n-1]
-}
-
-func initFn(m, n int) [][]int {
-	fn := make([][]int, m)
-	for i := range fn {
-		fn[i] = make([]int, n)
-	}
-	return fn
-}
-
-func main() {
-	paths := uniquePaths(3, 7)
-	fmt.Println(paths)
-
-	paths = uniquePaths(3, 2)
-	fmt.Println(paths)
-
-	paths = uniquePaths(7, 3)
-	fmt.Println(paths)
+	return d[m-1][n-1]
 }
