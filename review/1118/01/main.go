@@ -1,4 +1,4 @@
-package main
+package _1
 
 // time complexity: O(m)
 // space complexity: O(1)
